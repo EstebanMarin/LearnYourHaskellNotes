@@ -38,6 +38,27 @@ comparingList =
 -- True
 -- ghci> [3, 2, 3] < [3, 3, 2]
 
+-- ghci> [x*2 | x <- [1 ..15], x > 12]
+-- [26,28,30]
+
+boomBags xs = [if x > 10 then "boom" else "bang" | x <- xs, odd x, x < 20]
+
+result = boomBags [7 .. 25]
+
+-- ["bang","bang","boom","boom","boom","boom","boom"]
+
+nouns = ["dog", "frog", "pope"]
+
+adjetives = ["lazy", "grouchy", "scheming"]
+
+combination = [a ++ " . " ++ n | n <- nouns, a <- adjetives]
+
+-- ghci> combination
+-- ["lazy . dog","grouchy . dog","scheming . dog","lazy . frog","grouchy . frog","scheming . frog","lazy . pope","grouchy . pope","scheming . pope"]
+
+length' :: (Num a) => [t] -> [a]
+length' xs = [1 | _ <- xs]
+
 main = do
   putStrLn "Hello, everybody!"
   putStrLn
