@@ -6,5 +6,8 @@ charName 'a' = "Albert"
 listCompre :: (Num a) => [(a, a)] -> [a]
 listCompre xs = [a + b | (a, b) <- xs]
 
+-- Gards
+
+main :: IO ()
 main = do
   putStrLn "hellp chapter 3"
