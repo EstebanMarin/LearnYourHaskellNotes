@@ -21,6 +21,20 @@
 
 -- every infix operator will have a typeclass
 
+-- type annotations
+-- ghci> read "True"
+
+-- *** Exception: Prelude.read: no parse
+
+-- ghci> read "True" || False
+-- True
+-- ghci> :t read
+-- read :: Read a => String -> a
+-- ghci> :t read
+-- ghci> read "5" :: Int
+-- 5
+-- ghci> read "5" :: Float
+
 main :: IO ()
 main = do
   putStrLn "Hello, everybody!"
