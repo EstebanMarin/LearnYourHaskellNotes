@@ -59,6 +59,16 @@ combination = [a ++ " . " ++ n | n <- nouns, a <- adjetives]
 length' :: (Num a) => [t] -> [a]
 length' xs = [1 | _ <- xs]
 
+isInList = 4 `elem` [1 .. 10]
+
+-- Using Tuples
+touple1 = zip [1 ..] ['1', '2']
+
+-- ghci> zip [1 ..] ['1', '2']
+-- [(1,'1'),(2,'2')]
+
+triangle = [(x, y, z) | x <- [1 .. 10], y <- [1 .. 10], z <- [1 .. 10], x ^ 2 + y ^ 2 == z ^ 2, x + y + z == 24]
+
 main = do
   putStrLn "Hello, everybody!"
   putStrLn
