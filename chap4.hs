@@ -1,4 +1,3 @@
-import Distribution.Simple.Setup (falseArg)
 
 test = last [1, 2, 3, 4]
 
