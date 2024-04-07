@@ -43,6 +43,46 @@ chainCollatz x | odd x = x : chainCollatz (x * 3 + 1) | even x = x : chainCollat
 lengthMapping :: (Foldable t) => p -> [t a] -> [Int]
 lengthMapping x = map length
 
+sumInfinite :: Integer
+sumInfinite =
+  foldl1 (+) [1 ..]
+
+-- take3 :: (Integer a) => [a]
+-- take3 :: [a]
+-- take3 = take 3 sumInfinite
+
+-- fold
+-- take
+
+and' :: (Foldable t) => t Bool -> Bool
+and' = foldr (&&) True
+
+-- scans used to check whats happening in the fold
+
+sqrtSums :: Int
+sqrtSums = length (takeWhile (< 1000) (scanl1 (+) (map sqrt [1 ..]))) + 1
+
+-- 130
+
+-- ghci> sqrtSums
+-- 131
+-- ghci> sum (map sqrt [1 .. 131])
+-- 1005.0942035344083
+-- ghci> sum (map sqrt [1 .. 130])
+-- 993.6486803921487
+
+-- I believe that foldr is better handling infinite as the way it applies the function.
+
+sumV :: Integer
+sumV = sum (filter (> 10) (map (* 2) [2 .. 10]))
+
+sumV2 :: Integer
+sumV2 = sum $ filter (> 10) $ map (* 2) [2 .. 10]
+
+functionComposition = map (\x -> negate (abs x)) [5, -3, -4, 5]
+
+functionCop2 = map (negate . abs) [5, -3, -3, 4]
+
 main :: IO ()
 main = do
   putStrLn "Hello chapter 5"
