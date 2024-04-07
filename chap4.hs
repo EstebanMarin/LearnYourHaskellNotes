@@ -42,6 +42,16 @@ element' a (x : xs)
   | a == x = True
   | otherwise = element' a xs
 
+--  quick sort
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) = 
+    let
+        smaller = [a| a <- xs, a <= x]
+        larger = [b | b <- xs,  b > x]
+    in quicksort smaller ++ [x] ++ quicksort larger
+
 main :: IO ()
 main = do
   putStrLn "Hello chapter 4"
