@@ -21,8 +21,8 @@ example2 :: [Int]
 example2 = fmap1 (*) [1, 2, 3] <*> [10, 100] -- Result: [10,100,20,200,30,300]
 
 -- Example 3: Using <*> with IO
--- example3 :: IO ()
--- example3 = fmap1 (++ "Hello, World!") <*> pure1 "Hello, World!" -- This will print "Hello, World!" to the console
+example3 :: IO ()
+example3 = fmap1 (++ "Hello, World!") (pure1 "Hello, World!") >>= putStrLn -- This will print "Hello, World!" to the console
 
 -- Example 4: Using <*> with custom Applicative
 data MyMaybe a = MyNothing | MyJust a deriving (Show)
