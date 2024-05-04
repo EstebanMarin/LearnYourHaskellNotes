@@ -15,22 +15,43 @@ main =
     numberString <- getLine
     let number = read numberString
         newTodoItem = unlines $ delete (todoTasks !! number) todoTasks
-    -- bracketOnError
+    bracketOnError
+      (openTempFile "." "temp")
+      ( \(tempName, tempHandle) -> do
+          hClose tempHandle
+          removeFile tempName
+      )
+      ( \(tempName, tempHandle) -> do
+          hPutStr tempHandle newTodoItem
+          hClose tempHandle
+          removeFile "todofil.txt"
+          renameFile tempName "todofil.txt"
+      )
+    -- (tempName, tempHandle) <- openTempFile "." "temp"
+    putStrLn "test"
 
-    -- (openTempFile "." "temp")
-    -- ( \(tempName, tempHandle) -> do
-    --     hClose tempHandle
-    --     removeFile tempName
-    --   )
-    --   ( \(tempName, tempHandle) -> do
-    --       hPutStr tempHandle newTodoItem
-    --       hClose tempHandle
-    --       removeFile "todofil.txt"
-    --       renameFile tempName "todofil.txt"
-    --   )
+-- bracketOnError :: IO a -> (a -> IO b) -> (a -> IO c) -> IO c
+-- bracketOnError acquire release use = mask $ \restore -> do
+--   a <- acquire
+--   r <- restore (use a) `onException` release a
+--   _ <- release a
+-- return r
+-- bracketOnError
 
-    (tempName, tempHandle) <- openTempFile "." "temp"
-    hPutStr tempHandle newTodoItem
-    hClose tempHandle
-    removeFile "todofil.txt"
-    renameFile tempName "todofil.txt"
+-- (openTempFile "." "temp")
+-- ( \(tempName, tempHandle) -> do
+--     hClose tempHandle
+--     removeFile tempName
+--   )
+--   ( \(tempName, tempHandle) -> do
+--       hPutStr tempHandle newTodoItem
+--       hClose tempHandle
+--       removeFile "todofil.txt"
+--       renameFile tempName "todofil.txt"
+--   )
+
+-- (tempName, tempHandle) <- openTempFile "." "temp"
+-- hPutStr tempHandle newTodoItem
+-- hClose tempHandle
+-- removeFile "todofil.txt"
+-- renameFile tempName "todofil.txt"
