@@ -52,7 +52,12 @@ instance F.Foldable MyTree where
   foldMap f (Node x l r) = F.foldMap f l `mappend` f x `mappend` F.foldMap f r
 
 testTree :: MyTree Integer
-testTree = Node 5 (Node 3 (Node 1 EmptyTree EmptyTree) (Node 6 EmptyTree EmptyTree)) (Node 9 (Node 8 EmptyTree EmptyTree) (Node 10 EmptyTree EmptyTree))
+testTree =
+  Node
+    5
+    ( Node 3 (Node 1 EmptyTree EmptyTree) (Node 6 EmptyTree EmptyTree)
+    )
+    (Node 9 (Node 8 EmptyTree EmptyTree) (Node 10 EmptyTree EmptyTree))
 
 -- ghci> F.foldl (+) 0 testTree
 -- 42
