@@ -1,3 +1,5 @@
+import Distribution.System (OS)
+
 -- functor
 class FunctorMine f where
   fmap1 :: (a -> b) -> f a -> f b
@@ -49,6 +51,57 @@ instance MonadMine MyMaybe where
 
 -- ghci> MyJust 9 >>=! \x -> return1(x*9)
 -- MyJust 81
+
+type Bird = Int
+
+type Pole = (Bird, Bird)
+
+landLeft :: Bird -> Pole -> MyMaybe Pole
+landLeft n (left, right)
+  | abs ((left + n) - right) < 4 = MyJust (left + n, right)
+  | otherwise = MyNothing
+
+landRight :: Bird -> Pole -> MyMaybe Pole
+landRight n (left, right)
+  | abs (left - (right + n)) < 4 = MyJust (left, right + n)
+  | otherwise = MyNothing
+
+-- ghci> MyNothing >>=! landLeft 2
+-- MyNothing
+
+banana :: Pole -> MyMaybe Pole
+banana _ = MyNothing
+
+test :: MyMaybe Pole
+test = return1 (0, 0) >>=! landLeft 1 >>=! landRight 4 >>=! landLeft (-1) >>=! landRight (-2) >>=! banana >>=! landLeft 1 >>=! landRight 2
+
+-- do notation
+-- instance Monad oy MyMaybe
+instance Functor MyMaybe where
+  fmap = fmap1
+
+instance Applicative MyMaybe where
+  pure = return1
+  (<*>) = (<*!>)
+
+instance Monad MyMaybe where
+  return :: a -> MyMaybe a
+  return = return1
+  (>>=) :: MyMaybe a -> (a -> MyMaybe b) -> MyMaybe b
+  (>>=) = (>>=!)
+
+foo :: MyMaybe String
+foo = do
+  x <- MyJust 3
+  y <- MyJust "!"
+  return1 (show x ++ y)
+
+routine :: MyMaybe Pole
+routine = do
+  start <- return1 (0, 0)
+  first <- landLeft 2 start
+  second <- landRight 2 first
+  landLeft 1 second
 
 main :: IO ()
 main = do
