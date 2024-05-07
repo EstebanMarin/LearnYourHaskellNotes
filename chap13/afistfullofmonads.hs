@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -Wno-noncanonical-monad-instances #-}
 
+import Control.Monad (guard)
 import Distribution.System (OS)
 
 -- functor
@@ -104,6 +105,29 @@ routine = do
   first <- landLeft 2 start
   second <- landRight 2 first
   landLeft 1 second
+
+type KninghtPos = (Int, Int)
+
+-- Monads Laws
+-- Left Identity: The first law states that if we take a
+-- value and put it in a default
+-- context with return and then feed it to a function using >>=, it's the same as
+-- just taking the value and applying the function to it. In equation form:
+-- return a >>= f  ==  f a
+
+-- Right Identity: The second law states
+-- that if we have a monadic value and
+--    we use >>= to feed it to return,
+--    the result is our original monadic
+--    value. In equation form:
+-- m >>= return  ==  m
+
+-- Associativity: The final law states
+-- that when we have a chain of
+--   monadic function applications
+--   with >>=, it shouldn't matter
+--   how they're nested. In equation form:
+-- (m >>= f) >>= g  ==  m >>= (\x -> f x >>= g)
 
 main :: IO ()
 main = do
