@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-noncanonical-monad-instances #-}
+
 import Distribution.System (OS)
 
 -- functor
